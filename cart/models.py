@@ -2,10 +2,10 @@ from django.db import models
 
 # Create your models here.
 # Корзина Cart
-# user
+# user пользователь
 
 
 # Моделька CartItem
-# cart foreignKey
-# flower
-# quantity
+# cart foreignKey корзина
+# flower цветы берешь модельку ForeignKey
+# quantity количество
