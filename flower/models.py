@@ -24,9 +24,9 @@ class Color(models.Model):
 # image = ImageField
 
 
-# Отзывы
-# user
-# text
-# stars 0 - 10 типо пол звезды еще есть
-# created_at
-# Initials
+class Review(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    text = models.CharField(max_length=255)
+    stars = models.IntegerField()
+    created_at = models.DateField(auto_now_add=True)
