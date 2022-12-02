@@ -1,8 +1,8 @@
 from django.db import models
 from Pianta import settings
 
-# Create your models here.
 
+# Create your models here.
 # Моделька Цветов (flower)
 # title
 # price
@@ -11,13 +11,13 @@ from Pianta import settings
 # colors ManyToMany
 # sold_quantity
 
-# Моделька категорий
-# title
+
+class Category(models.Model):
+    title = models.CharField(max_length=30)
 
 
-# Моделька Цветов (color)
-# color_title
-
+class Color(models.Model):
+    title = models.CharField(max_length=30)
 
 # Моделька Фото
 # flower Foreign Key related_name
