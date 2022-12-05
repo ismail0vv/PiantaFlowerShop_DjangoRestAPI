@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .yasg import urlpatterns as swagger
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,3 +23,5 @@ urlpatterns = [
     path('api/v1/', include('flower.urls')),
     path('api/v1/', include('cart.urls'))
 ]
+
+urlpatterns += swagger

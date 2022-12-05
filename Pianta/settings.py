@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'flower',
     'users',
     'rest_framework_simplejwt.token_blacklist',
-    'cart'
+    'cart',
+    "drf_yasg"
 ]
 
 MIDDLEWARE = [
