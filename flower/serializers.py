@@ -28,7 +28,7 @@ SIZE_CHOICES = ('SM', 'MD', 'L', 'XL', 'XXL')
 class FlowerSerializer(serializers.ModelSerializer):
     colors = ColorSerializer(many=True)
     categories = CategorySerializer(many=True)
-    photos = serializers.SerializerMethodField(many=True)
+    photos = serializers.SerializerMethodField()
     size = serializers.ChoiceField(choices=SIZE_CHOICES)
 
     class Meta:

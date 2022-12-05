@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import TestApiView
+from flower import views
 
 urlpatterns = [
-    path('test/', TestApiView.as_view(), name='test')
+    path('flowers/<int:cat_id>/', views.FlowerListApiView.as_view(), name='flower list')
 ]
