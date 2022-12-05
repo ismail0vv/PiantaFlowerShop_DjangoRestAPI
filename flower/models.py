@@ -22,9 +22,6 @@ class Color(models.Model):
     title = models.CharField(max_length=30)
 
 
-# Моделька Фото
-# flower Foreign Key related_name
-# image = ImageField
 class Photo(models.Model):
     flower = models.ForeignKey(Flower, on_delete=models.CASCADE, related_name='photos')
     image = models.ImageField()
