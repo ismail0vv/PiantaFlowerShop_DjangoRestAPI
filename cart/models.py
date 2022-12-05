@@ -8,14 +8,17 @@ class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def cart_items_list(self):
-        return [item for item in self.items.all()]
+        return [{ "id": item.id, "cart_id": item.cart_id, "flower_id": item.flower_id, "quantity": item.quantity } for
+                item in self.items.all()]
 
     def total_price(self):
-        return sum([item.price for item in self.items.all()])
+        return sum([item.price() for item in self.items.all()])
 
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
     flower = models.ForeignKey(Flower, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
-    price = flower.price * quantity
+
+    def price(self):
+        return self.flower.price * self.quantity
