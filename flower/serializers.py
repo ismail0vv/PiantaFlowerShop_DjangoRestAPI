@@ -47,6 +47,10 @@ class FlowerValidateSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=255)
     sold_quantity = serializers.IntegerField(default=0)
 
+    class Meta:
+        model = Flower
+        fields = 'colors categories photos size description sold_quantity'.split()
+
     def validate_colors(self, colors):
         if len(colors) == Color.objects.filter(id__in=colors).count():
             return colors
@@ -74,14 +78,32 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ReviewValidateSerializer(serializers.Serializer):
+class ReviewValidateSerializer(serializers.ModelSerializer):
     author_id = serializers.IntegerField(min_value=1)
     title = serializers.CharField(max_length=50)
     text = serializers.CharField(max_length=255)
     stars = serializers.IntegerField(min_value=0, max_value=10)
+
+    class Meta:
+        model = Review
+        fields = 'author_id title text stars'.split()
 
     def validate_author_id(self, author_id):
         author_exists = User.objects.filter(id=author_id).exists()
         if author_exists:
             return author_id
         raise ValidationError('Author does not exists')
+
+
+class PhotoSerializer(serializers.ModelSerializer):
+    flower_id = serializers.IntegerField(min_value=1)
+
+    class Meta:
+        model = Photo
+        fields = 'flower_id image'.split()
+
+    def validate_flower_id(self, flower_id):
+        flower_exists = Flower.objects.filter(id=flower_id).exists()
+        if flower_exists:
+            return flower_id
+        raise ValidationError('flower does not exists')

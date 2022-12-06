@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.viewsets import ModelViewSet
 
 from .models import *
 from .serializers import *
@@ -91,3 +92,38 @@ class ReviewItemUpdateDeleteAPIView(generics.RetrieveUpdateDestroyAPIView, gener
             instance._prefetched_objects_cache = { }
 
         return Response(serializer.data)
+
+
+class FlowerViewSet(ModelViewSet):
+    serializer_class = FlowerSerializer
+    queryset = Flower.objects.all()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
+
+
+class CategoryViewSet(ModelViewSet):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
+
+
+class ColorViewSet(ModelViewSet):
+    serializer_class = ColorSerializer
+    queryset = Color.objects.all()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
+
+
+class PhotoViewSet(ModelViewSet):
+    serializer_class = PhotoSerializer
+    queryset = Photo.objects.all()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
+
+
+class ReviewViewSet(ModelViewSet):
+    serializer_class = ReviewValidateSerializer
+    queryset = Review.objects.all()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
