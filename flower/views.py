@@ -47,13 +47,6 @@ class ReviewListAPIView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
 
 
-class ReviewItemAPIView(generics.RetrieveAPIView):
-    permission_classes = [AllowAny]
-    serializer_class = ReviewSerializer
-    queryset = Review.objects.all()
-    authentication_classes = [JWTAuthentication]
-
-
 class ReviewItemUpdateDeleteAPIView(generics.RetrieveUpdateDestroyAPIView, generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ReviewValidateSerializer
