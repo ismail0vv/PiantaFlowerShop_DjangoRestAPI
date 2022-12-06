@@ -1,6 +1,17 @@
-from django.urls import path
-from .views import TestApiView
-
+from django.urls import path, include
+from flower import views
+from rest_framework.routers import SimpleRouter
+ROUTER = SimpleRouter()
+ROUTER.register('flower-crud', views.FlowerViewSet)
+ROUTER.register('category-crud', views.CategoryViewSet)
+ROUTER.register('color-crud', views.ColorViewSet)
+ROUTER.register('photo-crud', views.PhotoViewSet)
+ROUTER.register('review-crud', views.ReviewViewSet)
 urlpatterns = [
-    path('test/', TestApiView.as_view(), name='test')
+    path('flowers/<int:cat_id>/', views.FlowerListApiView.as_view(), name='flower list'),
+    path('', include(ROUTER.urls)),
+    path('category/', views.CategoryListApiView.as_view()),
+    path('category/<int:pk>/', views.CategoryDetailAPIView.as_view()),
+    path('reviews/', views.ReviewListAPIView.as_view()),
+    path('reviews/<int:pk>/', views.ReviewItemUpdateDeleteAPIView.as_view())
 ]

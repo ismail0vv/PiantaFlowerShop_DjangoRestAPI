@@ -3,6 +3,7 @@ from rest_framework.serializers import ValidationError
 
 from .models import User
 from rest_framework.authtoken.models import Token
+from cart.models import Cart
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -37,6 +38,6 @@ class SignUpSerializer(serializers.ModelSerializer):
 
         user.set_password(password)
         user.save()
-
+        Cart.objects.create(user=user)
         Token.objects.create(user=user)
         return user
