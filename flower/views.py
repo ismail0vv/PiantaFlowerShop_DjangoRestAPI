@@ -4,6 +4,8 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
 from .models import *
 from .serializers import *
 
@@ -12,6 +14,7 @@ from .serializers import *
 class FlowerListApiView(generics.ListAPIView):
     permission_classes = [AllowAny]
     serializer_class = FlowerSerializer
+    authentication_classes = [JWTAuthentication]
 
     def get_queryset(self):
         queryset = Flower.objects.all()
@@ -23,11 +26,13 @@ class CategoryListApiView(generics.ListAPIView):
     permission_classes = [AllowAny]
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
+    authentication_classes = [JWTAuthentication]
 
 
 class CategoryDetailAPIView(generics.RetrieveAPIView):
     permission_classes = [AllowAny]
     serializer_class = CategorySerializer
+    authentication_classes = [JWTAuthentication]
 
     def get_queryset(self):
         queryset = Flower.objects.filter(categories__in=[self.kwargs['pk']])
@@ -38,17 +43,20 @@ class ReviewListAPIView(generics.ListAPIView):
     permission_classes = [AllowAny]
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
+    authentication_classes = [JWTAuthentication]
 
 
 class ReviewItemAPIView(generics.RetrieveAPIView):
     permission_classes = [AllowAny]
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
+    authentication_classes = [JWTAuthentication]
 
 
 class ReviewItemUpdateDeleteAPIView(generics.RetrieveUpdateDestroyAPIView, generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ReviewValidateSerializer
+    authentication_classes = [JWTAuthentication]
 
     def create(self, request, *args, **kwargs):
         if Review.objects.filter(author=request.user).exists():
