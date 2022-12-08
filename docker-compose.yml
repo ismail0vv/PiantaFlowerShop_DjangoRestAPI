@@ -15,12 +15,12 @@ services:
     build: .
     restart: always
     command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic
-        --no-input && gunicorn -b 0.0.0.0:8000 Pianta.wsgi --reload"
+        --no-input && gunicorn -b 0.0.0.0:8005 Pianta.wsgi --reload"
     volumes:
       - .:/app
       - ./static:/static
     ports:
-      - "8000:8000"
+      - "8005:8005"
     depends_on:
       - postgres_db
 
@@ -33,8 +33,8 @@ services:
       - postgres_db
       - web
     ports:
-      - "80:80"
-      - "443:443"
+      - "81:81"
+      - "442:442"
 
 volumes:
   postgres_data:
