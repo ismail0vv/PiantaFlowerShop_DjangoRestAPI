@@ -31,6 +31,7 @@ class SignUpSerializer(serializers.ModelSerializer):
             email=self.validated_data['email'],
             phone=self.validated_data['phone'],
         )
+
         password = self.validated_data['password']
         password2 = self.validated_data['password2']
         if password2 != password:
@@ -39,5 +40,4 @@ class SignUpSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         Cart.objects.create(user=user)
-        Token.objects.create(user=user)
         return user
