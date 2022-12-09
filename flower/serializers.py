@@ -18,7 +18,7 @@ class ColorSerializer(serializers.ModelSerializer):
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Color
+        model = Category
         fields = '__all__'
 
 
