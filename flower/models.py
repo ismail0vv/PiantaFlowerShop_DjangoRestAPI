@@ -1,6 +1,6 @@
 from django.db import models
 from Pianta import settings
-
+from django.contrib.sites.shortcuts import get_current_site
 
 class Flower(models.Model):
     title = models.CharField(max_length=50)
@@ -12,10 +12,11 @@ class Flower(models.Model):
     size = models.CharField(max_length=5)
 
     def get_photos_list(self):
-        return [photo.image for photo in self.photos.all()]
+        return [photo.image.url for photo in self.photos.all()]
 
     def __str__(self):
         return self.title
+
 
 
 class Category(models.Model):

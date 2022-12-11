@@ -33,10 +33,13 @@ class FlowerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Flower
-        fields = ('title', 'price', 'description', 'categories', 'colors', 'sold_quantity', 'size', 'photos')
+        fields = ('id', 'title', 'price', 'description', 'categories', 'colors', 'sold_quantity', 'size', 'photos')
 
     def get_photos(self, flower):
-        return flower.get_photos_list()
+        phtos = flower.get_photos_list()
+        for i in range(len(phtos)):
+            phtos[i] = self.context['request'].build_absolute_uri(phtos[i])
+        return phtos
 
 
 class FlowerValidateSerializer(serializers.Serializer):
@@ -97,10 +100,14 @@ class ReviewValidateSerializer(serializers.ModelSerializer):
 
 class PhotoSerializer(serializers.ModelSerializer):
     flower_id = serializers.IntegerField(min_value=1)
-
+    image = serializers.SerializerMethodField()
     class Meta:
         model = Photo
-        fields = 'flower_id image'.split()
+        fields = 'id flower_id image'.split()
+
+
+    def get_image(self, photo):
+        return self.context['request'].build_absolute_uri(photo.image.url)
 
     def validate_flower_id(self, flower_id):
         flower_exists = Flower.objects.filter(id=flower_id).exists()

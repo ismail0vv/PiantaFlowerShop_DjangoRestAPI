@@ -14,7 +14,7 @@ class CartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = 'user items total_price'.split(' ')
+        fields = 'id user items total_price'.split(' ')
 
     def get_items(self, cart):
         return cart.cart_items_list()
