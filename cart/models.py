@@ -28,3 +28,7 @@ class CartItem(models.Model):
 
     def __str__(self):
         return str(self.cart) + 'cart item'
+
+    def add_quantity(self, amount):
+        self.quantity += amount
+        self.save()

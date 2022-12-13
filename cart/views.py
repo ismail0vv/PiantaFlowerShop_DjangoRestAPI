@@ -29,9 +29,15 @@ class CartAddView(generics.GenericAPIView):
             Cart.objects.create(user=request.user)
         serializer = CartItemValidateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        CartItem.objects.create(cart=Cart.objects.get(user=request.user),
-                                flower_id=serializer.validated_data['flower_id'],
-                                quantity=serializer.validated_data['quantity'])
+        flower_exists = CartItem.objects.filter(flower_id=serializer.validated_data['flower_id']).exists()
+        if not flower_exists:
+            CartItem.objects.create(cart=Cart.objects.get(user=request.user),
+                                    flower_id=serializer.validated_data['flower_id'],
+                                    quantity=serializer.validated_data['quantity'])
+        else:
+            CartItem.objects.get(flower_id=serializer.validated_data['flower_id']).add_quantity(
+                serializer.validated_data['quantity'])
+
         return Response({"message": "added"})
 
 
