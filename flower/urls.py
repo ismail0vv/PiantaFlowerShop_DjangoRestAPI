@@ -9,6 +9,7 @@ ROUTER.register('photo-crud', views.PhotoViewSet)
 ROUTER.register('review-crud', views.ReviewViewSet)
 urlpatterns = [
     path('flowers/<int:cat_id>/', views.FlowerListApiView.as_view(), name='flower list'),
+    path('flower-detail/<int:pk>/', views.FlowerDetailApiView.as_view()),
     path('', include(ROUTER.urls)),
     path('category/', views.CategoryListApiView.as_view()),
     path('category/<int:pk>/', views.CategoryDetailAPIView.as_view()),

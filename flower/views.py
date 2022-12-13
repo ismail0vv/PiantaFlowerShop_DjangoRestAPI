@@ -23,6 +23,12 @@ class FlowerListApiView(generics.ListAPIView):
         return queryset
 
 
+class FlowerDetailApiView(generics.RetrieveAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = FlowerSerializer
+    authentication_classes = [JWTAuthentication]
+    queryset = Flower.objects.all()
+
 class CategoryListApiView(generics.ListAPIView):
     permission_classes = [AllowAny]
     serializer_class = CategorySerializer
