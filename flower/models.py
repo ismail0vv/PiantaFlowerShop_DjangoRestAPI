@@ -17,6 +17,10 @@ class Flower(models.Model):
     def __str__(self):
         return self.title
 
+    def add_solded(self, amount):
+        self.sold_quantity += amount
+        self.save()
+
 
 
 class Category(models.Model):
