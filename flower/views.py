@@ -11,6 +11,7 @@ from .models import *
 from .serializers import *
 import random
 
+
 # Create your views here.
 
 class FlowerAlsoBrowsedApiView(generics.ListAPIView):
@@ -23,6 +24,7 @@ class FlowerAlsoBrowsedApiView(generics.ListAPIView):
         random_items = random.sample(queryset, min(len(queryset), 3))
 
         return random_items
+
 
 class FlowerBestApiView(generics.ListAPIView):
     permission_classes = [AllowAny]
