@@ -9,9 +9,21 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import *
 from .serializers import *
-
+import random
 
 # Create your views here.
+
+class FlowerAlsoBrowsedApiView(generics.ListAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = FlowerSerializer
+    authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        queryset = list(Flower.objects.all())
+        random_items = random.sample(queryset, min(len(queryset), 3))
+
+        return random_items
+
 class FlowerBestApiView(generics.ListAPIView):
     permission_classes = [AllowAny]
     serializer_class = FlowerSerializer
