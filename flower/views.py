@@ -18,8 +18,15 @@ class FlowerListApiView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
 
     def get_queryset(self):
-        queryset = Flower.objects.filter(categories__in=[(self.request.parser_context.get('kwargs').get('cat_id', '0'))])
-
+        # queryset = Flower.objects.filter(categories__in=[(self.request.parser_context.get('kwargs').get('cat_id', '0'))])
+        cat_id = self.request.GET.get('cat_id', None)
+        search = self.request.GET.get('search_text', None)
+        queryset = Flower.objects.all()
+        if cat_id:
+            queryset = queryset.filter(categories__in=[cat_id])
+        if search:
+            queryset = queryset.filter(title__icontains=search)
+        print(queryset)
         return queryset
 
 
