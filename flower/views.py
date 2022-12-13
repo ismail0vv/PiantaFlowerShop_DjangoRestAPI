@@ -12,6 +12,16 @@ from .serializers import *
 
 
 # Create your views here.
+class FlowerBestApiView(generics.ListAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = FlowerSerializer
+    authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        queryset = Flower.objects.order_by('-sold_quantity')
+        return queryset
+
+
 class FlowerListApiView(generics.ListAPIView):
     permission_classes = [AllowAny]
     serializer_class = FlowerSerializer
@@ -35,6 +45,7 @@ class FlowerDetailApiView(generics.RetrieveAPIView):
     serializer_class = FlowerSerializer
     authentication_classes = [JWTAuthentication]
     queryset = Flower.objects.all()
+
 
 class CategoryListApiView(generics.ListAPIView):
     permission_classes = [AllowAny]
@@ -67,7 +78,7 @@ class ReviewItemUpdateDeleteAPIView(generics.RetrieveUpdateDestroyAPIView, gener
 
     def create(self, request, *args, **kwargs):
         if Review.objects.filter(author=request.user).exists():
-            return Response({ "detail": "requesting user already created review update or delete previour review" },
+            return Response({"detail": "requesting user already created review update or delete previour review"},
                             status=status.HTTP_406_NOT_ACCEPTABLE)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -95,7 +106,7 @@ class ReviewItemUpdateDeleteAPIView(generics.RetrieveUpdateDestroyAPIView, gener
         if getattr(instance, '_prefetched_objects_cache', None):
             # If 'prefetch_related' has been applied to a queryset, we need to
             # forcibly invalidate the prefetch cache on the instance.
-            instance._prefetched_objects_cache = { }
+            instance._prefetched_objects_cache = {}
 
         return Response(serializer.data)
 
